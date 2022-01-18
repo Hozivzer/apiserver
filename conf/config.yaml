@@ -2,7 +2,7 @@
 runmode: debug
 
 #HTTP绑定端口
-addr: :88481
+addr: :8848
 
 #APISERVER 的名字
 name: apiserver
