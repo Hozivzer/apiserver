@@ -1,0 +1,26 @@
+#开发模式 debug,release,test
+runmode: debug
+
+#HTTP绑定端口
+addr: :8848
+
+#APISERVER 的名字
+name: apiserver
+
+#pingServer函数请求的API服务器的IP：port
+url: http://127.0.0.1:8848
+
+#pingServer函数尝试的次数
+max_ping_count: 10
+
+#数据库库
+db:
+  name: db_apiserver
+  addr: 1.117.109.209:3306
+  username: root
+  password: hellozhang
+docker_db:
+  name: db_apiserver
+  addr: 1.117.109.209:3306
+  username: root
+  password: hellozhang
