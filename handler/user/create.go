@@ -1,41 +1,44 @@
 package user
 
 import (
-	"fmt"
 	"log"
 
 	. "github.com/apiserver/handler"
+	"github.com/apiserver/model"
 	"github.com/apiserver/pkg/errno"
+	"github.com/apiserver/util"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Create(c *gin.Context) {
-
+	log.Printf("User Create function called." + "X-Request-Id:" + util.GetReqID(c))
 	var r CreateRequest
 	if err := c.Bind(&r); err != nil {
 		SendResponse(c, errno.ErrBind, nil)
 		return
 	}
 
-	admin2 := c.Param("username")
-	log.Printf("URL username: %s", admin2)
+	u := model.UserModel{
+		Username: r.Username,
+		Password: r.Password,
+	}
 
-	desc := c.Query("desc")
-	log.Printf("URL key param desc: %s", desc)
-
-	contentType := c.GetHeader("Content-Type")
-	log.Printf("Header Content-Type: %s", contentType)
-
-	log.Printf("username is: [%s], password is [%s]", r.Username, r.Password)
-
-	if r.Username == "" {
-		SendResponse(c, errno.New(errno.ErrUserNotFound, fmt.Errorf("username can not found in db: xx.xx.xx.xx")), nil)
+	//验证数据
+	if err := u.Validate(); err != nil {
+		SendResponse(c, errno.ErrValidation, nil)
 		return
 	}
 
-	if r.Password == "" {
-		SendResponse(c, fmt.Errorf("password is empty"), nil)
+	//加密密码
+	if err := u.Encrypt(); err != nil {
+		SendResponse(c, errno.ErrValidation, nil)
+		return
+	}
+
+	//插入数据库
+	if err := u.Create(); err != nil {
+		SendResponse(c, errno.ErrDatabase, nil)
 		return
 	}
 

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/apiserver/config"
+	"github.com/apiserver/model"
 	"github.com/apiserver/router"
 
 	"github.com/gin-gonic/gin"
@@ -27,9 +28,9 @@ func main() {
 		panic(err)
 	}
 
-	// //init db
-	// mode.DB.Init()
-	// defer mode.DB.Close()
+	//init db
+	model.DB.Init()
+	defer model.DB.Close()
 
 	//set gin mode
 	gin.SetMode(viper.GetString("runmode"))

@@ -16,11 +16,11 @@ max_ping_count: 10
 #数据库库
 db:
   name: db_apiserver
-  addr: 1.117.109.209:3306
+  addr: 127.0.0.1:3306
   username: root
   password: hellozhang
 docker_db:
   name: db_apiserver
-  addr: 1.117.109.209:3306
+  addr: 127.0.0.1:3306
   username: root
   password: hellozhang

@@ -1,11 +1,11 @@
-package mode
+package model
 
 import (
 	"fmt"
 	"log"
 
 	"github.com/jinzhu/gorm"
-	//_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/spf13/viper"
 )
 
@@ -36,7 +36,7 @@ func openDB(username, password, addr, name string) *gorm.DB {
 }
 
 func setupDB(db *gorm.DB) {
-	db.LogMode(false)
+	db.LogMode(true)
 	db.DB().SetMaxIdleConns(0)
 }
 
