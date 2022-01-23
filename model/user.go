@@ -32,3 +32,15 @@ func (u *UserModel) Encrypt() (err error) {
 func (u *UserModel) Create() error {
 	return DB.Self.Create(&u).Error
 }
+
+//删除用户
+func DeleteUser(id uint64) error {
+	user := UserModel{}
+	user.BaseModel.Id = id
+	return DB.Self.Delete(&user).Error
+}
+
+//更新用户
+func (u *UserModel) Update() error {
+	return DB.Self.Save(u).Error
+}
