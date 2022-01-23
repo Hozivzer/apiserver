@@ -1,7 +1,10 @@
 package model
 
 import (
+	"fmt"
+
 	"github.com/apiserver/pkg/auth"
+	"github.com/apiserver/pkg/constvar"
 	validator "github.com/go-playground/validator/v10"
 )
 
@@ -43,4 +46,26 @@ func DeleteUser(id uint64) error {
 //更新用户
 func (u *UserModel) Update() error {
 	return DB.Self.Save(u).Error
+}
+
+//获取用户列表
+func ListUser(username string, offset, limit int) ([]*UserModel, uint64, error) {
+	if limit == 0 {
+		limit = constvar.DefaultLimit
+	}
+
+	users := make([]*UserModel, 0)
+	var count uint64
+
+	where := fmt.Sprintf("username like '%%%s%%'", username)
+	if err := DB.Self.Model(&UserModel{}).Where(where).Count(&count).Error; err != nil {
+		return users, count, err
+	}
+
+	if err := DB.Self.Where(where).Offset(offset).Limit(limit).Order("id desc").Find(&users).Error; err != nil {
+		return users, count, err
+	}
+
+	return users, count, nil
+
 }
