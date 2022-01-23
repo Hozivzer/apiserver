@@ -69,3 +69,10 @@ func ListUser(username string, offset, limit int) ([]*UserModel, uint64, error) 
 	return users, count, nil
 
 }
+
+//获取用户
+func GetUser(username string) (*UserModel, error) {
+	u := &UserModel{}
+	d := DB.Self.Where("username = ?", username).First(&u)
+	return u, d.Error
+}
