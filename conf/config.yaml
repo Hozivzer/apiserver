@@ -13,6 +13,9 @@ url: http://127.0.0.1:8848
 #pingServer函数尝试的次数
 max_ping_count: 10
 
+#jwt
+jwt_secret: Rtg8BPKNEf2mB4mgvKONGPZZQSaJWNLijxR42qRgq0iBb5
+
 #数据库库
 db:
   name: db_apiserver
