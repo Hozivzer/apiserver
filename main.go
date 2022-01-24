@@ -9,6 +9,7 @@ import (
 	"github.com/apiserver/config"
 	"github.com/apiserver/model"
 	"github.com/apiserver/router"
+	"github.com/apiserver/router/middleware"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
@@ -38,13 +39,14 @@ func main() {
 	//create gin enine
 	g := gin.New()
 
-	middlewares := []gin.HandlerFunc{}
+	//middlewares := []gin.HandlerFunc{}
 
 	//Routes
 	router.Load(
 		g,
 
-		middlewares...,
+		middleware.RequestId(),
+		middleware.Logging(),
 	)
 
 	go func() {

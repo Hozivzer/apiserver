@@ -36,7 +36,7 @@ func openDB(username, password, addr, name string) *gorm.DB {
 }
 
 func setupDB(db *gorm.DB) {
-	db.LogMode(true)
+	db.LogMode(false)
 	db.DB().SetMaxIdleConns(0)
 }
 
