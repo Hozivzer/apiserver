@@ -1,0 +1,99 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  CreateRequest:
+    properties:
+      password:
+        type: string
+        x-go-name: Password
+      username:
+        type: string
+        x-go-name: Username
+    type: object
+    x-go-package: github.com/apiserver/handler/user
+  Response:
+    properties:
+      code:
+        format: int64
+        type: integer
+        x-go-name: Code
+      data:
+        type: object
+        x-go-name: Data
+      message:
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: github.com/apiserver/handler
+host: 1.117.109.209:8848
+info:
+  description: Documentation of our aptserver API.
+  title: aptserver.
+  version: 0.1.0
+paths:
+  /login:
+    post:
+      operationId: userLoginResponse
+      parameters:
+      - in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/CreateRequest'
+      responses:
+        "200":
+          $ref: '#/responses/userLoginResponse'
+        default:
+          $ref: '#/responses/errResponse'
+      summary: 用户登录.
+      tags:
+      - login
+  /v1/user/{name}:
+    get:
+      operationId: getUserRequest
+      parameters:
+      - in: path
+        name: name
+        required: true
+        type: string
+        x-go-name: Name
+      responses:
+        "200":
+          $ref: '#/responses/getUserResponse'
+        default:
+          $ref: '#/responses/errResponse'
+      summary: Get a user from memory.
+      tags:
+      - user
+produces:
+- application/json
+responses:
+  errResponse:
+    description: This text will appear as description of your error response body.
+    headers:
+      code:
+        description: Error code.
+        format: int64
+        type: integer
+      message:
+        description: Error message.
+        type: string
+  getUserResponse:
+    description: This text will appear as description of your response body.
+    schema:
+      $ref: '#/definitions/Response'
+  userLoginResponse:
+    description: This text will appear as description of your response body.
+    schema:
+      $ref: '#/definitions/Response'
+schemes:
+- http
+security:
+- APIKey:
+  - '[]'
+securityDefinitions:
+  APIKey:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

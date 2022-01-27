@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/apiserver/config"
+	_ "github.com/apiserver/docs"
 	"github.com/apiserver/model"
 	"github.com/apiserver/router"
 	"github.com/apiserver/router/middleware"
